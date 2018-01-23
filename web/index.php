@@ -105,6 +105,6 @@
         </div>
       </div>
     </div>
-    <script src="main.js" type="text/javascript"></script>
+    <script src="scripts/main.js" type="text/javascript"></script>
   </body>
 </html>
