@@ -1,0 +1,24 @@
+{
+  "images": [
+    {
+      "src": "images/MeAndMyBoys.jpg",
+      "alt": "Picture of Matt with his sons",
+      "caption": "Me and my three sons: Ben, Josh, and Joseph."
+    },
+    {
+      "src": "images/MeAndMyWife.jpg",
+      "alt": "Picture of Matt with his wife, Amy",
+      "caption": "Me and my wife at Disney World last summer. We've been married for 19 years! And I love her more each day."
+    },
+    {
+      "src": "images/PunchyMe.jpg",
+      "alt": "Picture of Matt posing like a goofball after more than 24 hours of travel and no sleep",
+      "caption": "For our trip to Disney World, we flew from California (where we'd been for my sister's wedding) to Florida via Atlanta. We were awake more than 24 hours, and we showed it."
+    },
+    {
+      "src": "images/MattBurr.jpg",
+      "alt": "Picture of Matt Burr",
+      "caption": "I live in Texas. I love to program. I'm an avid reader, and an amateur magician."
+    }
+  ]
+}
