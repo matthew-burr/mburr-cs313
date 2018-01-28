@@ -1,9 +1,5 @@
 <?php 
-  session_start();
-  error_reporting(E_WARNING | E_ERROR | E_PARSE);
-
-  require 'catalog.php';
-
+  require 'helper.php';
   $_SERVER["REQUEST_METHOD"] == "POST" OR die;
   isset($_POST["action"]) or die;
 
@@ -19,6 +15,8 @@
   case "getCatalog":
     getCatalog();
     break;
+  case "getGrandTotal":
+    getGrandTotal();
   }
 
   function addItem() {
@@ -50,6 +48,15 @@
   function getCatalog() {
     global $catalog;
     sendResult("success", "Retrieved catalog.", $catalog);
+  }
+
+  function getGrandTotal() {
+    $grandTotal = 0;
+    if (isset($_SESSION["cart"])) {
+      $grandTotal = array_reduce(array_keys($_SESSION["cart"]), "sumCartItems", $grandTotal);
+    }
+
+    sendResult("success", money_format("%.2n", $grandTotal), $grandTotal);
   }
 
   function sendResult($status, $msg, $content = NULL) {

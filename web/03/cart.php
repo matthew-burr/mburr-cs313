@@ -1,5 +1,8 @@
 <?php
+  
+  error_reporting(E_WARNING | E_ERROR | E_PARSE);
   session_start();
+
 ?>
 <!doctype html>
 <html>
@@ -17,47 +20,10 @@
       </div> <!-- row -->
       <div class="row">
         <div class="col-sm">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Count</th>
-                <th scope="col">Unit Price</th>
-                <th scope="col">Total Price</th>
-                <th scope="col">&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody id="cart-contents">
-            <?php 
-                require 'catalog.php';
-                setlocale(LC_MONETARY, 'en_US.UTF-8'); // Per comments in http://php.net/manual/en/function.money-format.php
-
-                isset($_SESSION["cart"]) or die;
-                $cart = $_SESSION["cart"];
-
-                foreach($cart as $item => $count) {
-                  $name = getName($item);
-                  $price = getPrice($item);
-                  $total = $price * $count;
-                  $priceStr = money_format('%.2n', $price); // Per comments at http://php.net/manual/en/function.money-format.php
-                  $totalStr = money_format('%.2n', $total);
-                  echo "<tr><td>$item</td><td>$count</td><td>$priceStr</td><td>$totalStr</td><td><input type='button' class='btn btn-primary remove-item-btn' value='Remove' id='$item' /></td></tr>";
-                }
-
-                function getName($item) {
-                  global $catalog;
-                  $itemDetail = $catalog[$item];
-                  return $itemDetail["name"];
-                }
-
-                function getPrice($item) {
-                  global $catalog;
-                  $itemDetail = $catalog[$item];
-                  return $itemDetail["unit-price"];
-                }
-            ?>
-            </tbody>
-          </table> <!-- table -->
+        <?php 
+require 'render_cart.php';
+renderCart(true);
+?>
         </div> <!-- col-sm -->
       </div> <!-- row -->
       <div class="row">

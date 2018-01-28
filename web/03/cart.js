@@ -9,6 +9,12 @@ $(document).ready(function() {
           console.log(message);
           displayAlert(message);
           $(item).closest("tr").remove();
+          $.post("doAction.php", { action: "getGrandTotal" },
+            function(response) {
+              var grandTotal = response["message"];
+              console.log(grandTotal);
+              $("#grand-total-cell").text(grandTotal)
+            }, "json");
         }, "json");
     });
   });

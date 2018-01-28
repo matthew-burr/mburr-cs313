@@ -14,7 +14,7 @@
       </div>
       <div class="row">
         <div class="col-sm">
-          <form method="POST" action="confirmation.php">
+          <form id="checkout-form" method="POST" action="confirmation.php">
             <div class="form-group">
               <label for="buyer-name">Name</label>
               <input class="form-control" id="buyer-name" name="buyer-name" type="text" placeholder="Your first and last name" required />
