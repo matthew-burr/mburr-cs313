@@ -19,7 +19,10 @@
         </ul>
       </div>
     </nav>
-    <h1>Coming soon!</h1>
+    <h1>Weekly Assignments</h1>
+    <ul>
+      <li><a href="03/browse.php">Week 3</a></li>
+    </ul>
   </body>
 </html>
 
