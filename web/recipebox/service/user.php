@@ -25,13 +25,13 @@ function getUser() {
   $dbHost = $dbOpts['host'];
   $dbPort = $dbOpts['port'];
   $dbUser = $dbOpts['user'];
-  $dbPass = $dbOpts['password'];
+  $dbPass = $dbOpts['pass'];
   $dbName = ltrim($dbOpts['path'], '/');
   try {
     $db = new PDO("pgsql:host=$dbHost;dbname=$dbName;port=$dbPort", $dbUser, $dbPass);
   }
   catch (PDOException $ex) {
-    sendResponse("failure", $dbPass);
+    sendResponse("failure", $ex->getMessage());
     die();
   }
 
