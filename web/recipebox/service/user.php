@@ -31,7 +31,7 @@ function getUser() {
     $db = new PDO("pgsql:host=$dbHost;dbname=$dbName;port=$dbPort", $dbUser, $dbPass);
   }
   catch (PDOException $ex) {
-    sendResponse("failure", parse_url($dbUrl));
+    sendResponse("failure", $ex->message() + ": " + parse_url($dbUrl));
     die();
   }
 
