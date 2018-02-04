@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS recipe_box.user_recipe (
 INHERITS (recipe_box.base_table);
 
 CREATE TABLE IF NOT EXISTS recipe_box.recipe_ingredient (
-  recipe_id INT CONSTRAINT recipe_box_recipe_ingredient_ingredient_exists REFERENCES recipe_box.ingredient (id),
-  ingredient_id INT CONSTRAINT recipe_box_recipe_ingredient_recipe_exists REFERENCES recipe_box.recipe (id),
+  recipe_id INT CONSTRAINT recipe_box_recipe_ingredient_ingredient_exists REFERENCES recipe_box.recipe (id),
+  ingredient_id INT CONSTRAINT recipe_box_recipe_ingredient_recipe_exists REFERENCES recipe_box.ingredient (id),
   CONSTRAINT pk_recipe_box_recipe_ingredient PRIMARY KEY (recipe_id, ingredient_id)
 )
 INHERITS (recipe_box.base_table);

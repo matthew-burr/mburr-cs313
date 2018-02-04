@@ -17,4 +17,25 @@ function sendResponse($status = "success", $message = "", $content = NULL) {
   $responseJSON = json_encode($response);
   echo $responseJSON;
 }
+
+// getConnection returns a database connection to send and retrieve queries
+function getConnection() {
+  $dbUrl = getenv('DATABASE_URL');
+
+  $dbOpts = parse_url($dbUrl);
+
+  $dbHost = $dbOpts['host'];
+  $dbPort = $dbOpts['port'];
+  $dbUser = $dbOpts['user'];
+  $dbPass = $dbOpts['pass'];
+  $dbName = ltrim($dbOpts['path'], '/');
+  try {
+    $db = new PDO("pgsql:host=$dbHost;dbname=$dbName;port=$dbPort", $dbUser, $dbPass);
+  }
+  catch (PDOException $ex) {
+    sendResponse("failure", $ex->getMessage());
+    die();
+  }
+  return $db;
+}
 ?>

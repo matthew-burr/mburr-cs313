@@ -17,7 +17,8 @@ INSERT INTO "recipe" (name, owner_user_id, servings, meal, instructions) VALUES
 ('Recipe 1', 1 /* Matt */, 4, 'breakfast', 'Yada yada yada'),
 ('Recipe 2', 1, 8, 'lunch', 'Yada yada yada'),
 ('Recipe 3', 2 /* Amy */, 2, 'dinner', 'Yum yum yum'),
-('Recipe 4', 2, 10, 'dessert', 'Yum yum yum');
+('Recipe 4', 2, 10, 'dessert', 'Yum yum yum'),
+('Recipe 5', 2, 4, 'dinner', 'Yada yada yum yum');
 
 INSERT INTO "ingredient" (name) VALUES
 ('ingredient 1'),

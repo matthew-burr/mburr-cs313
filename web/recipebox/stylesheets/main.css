@@ -1,0 +1,11 @@
+#recipeBoxHeader {
+  /*height: 150px;*/
+  background-image: url("../images/header.jpg");
+  background-position: left top;
+}
+
+#recipeBoxHeader h1 {
+  color: white;
+  font-size: 48pt;
+  text-shadow: 2px 2px 5px rgb(10, 10, 10);
+}
