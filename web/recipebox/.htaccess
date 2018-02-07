@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule "^service/.*" "service/recipebox.php"
