@@ -1,4 +1,6 @@
 // Here's where the code actually begins
+// Once the document is loaded, we retrieve our
+// list of available meals from the service
 $(document).ready(() => {
   $.post(
     "service/recipebox.php",
@@ -51,6 +53,7 @@ function mealRender(meal, isActive) {
 
 // mealPageRender renders the recipes for a particular meal
 function mealPageRender(meal) {
+  recipePanelClear();
   $.post(
     "service/recipebox.php",
     { action: "getRecipeList", meal: meal },
@@ -99,6 +102,10 @@ function recipeListItemRender(recipe, isActive) {
       ${recipe.name}
     </a>
   `;
+}
+
+function recipePanelClear() {
+  $("#recipePanel").html("");
 }
 
 function recipePanelRender(recipeID) {
