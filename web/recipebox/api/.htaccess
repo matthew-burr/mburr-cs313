@@ -1,7 +1,7 @@
 RewriteEngine On
-RewriteRule "^meals/([a-z]+)$" "meals/meals_recipes.php?meal=$1"
-RewriteRule "^meals$" "meals/meals.php"
-RewriteRule "^recipes/([0-9]+)$" "recipes/recipes_by_id.php?id=$1"
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule "^meals/([a-z]+)$" "meals/meals_recipes.php?meal=$1"
+RewriteRule "^meals$" "meals/meals.php"
+RewriteRule "^recipes/([0-9]+)$" "recipes/recipes_by_id.php?id=$1"
