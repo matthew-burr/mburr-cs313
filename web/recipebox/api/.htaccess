@@ -1,4 +1,7 @@
 RewriteEngine On
-RewriteRule "^meals/([a-z]+)$" "https://%{HTTP_HOST}/recipebox/api/meals/meals_recipes.php?meal=$1"
-RewriteRule "^meals$" "https://%{HTTP_HOST}/recipebox/api/meals/meals.php"
-RewriteRule "^recipes/([0-9]+)$" "https://%{HTTP_HOST}/recipebox/api/recipes/recipes_by_id.php?id=$1"
+RewriteRule "^meals/([a-z]+)$" "http://%{HTTP_HOST}/recipebox/api/meals/meals_recipes.php?meal=$1"
+RewriteRule "^meals$" "http://%{HTTP_HOST}/recipebox/api/meals/meals.php"
+RewriteRule "^recipes/([0-9]+)$" "http://%{HTTP_HOST}/recipebox/api/recipes/recipes_by_id.php?id=$1"
+
+RewriteCond "%{HTTP_HOST}" "herokuapp.com"
+RewriteRule "^http" "https"
