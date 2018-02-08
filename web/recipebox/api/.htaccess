@@ -1,4 +1,6 @@
-RewriteEngine on
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteRule "^meals/([a-z]+)$" "meals/meals_recipes.php?meal=$1"
 RewriteRule "^meals/$" "meals/meals.php"
 RewriteRule "^recipes/([0-9]+)$" "recipes/recipes_by_id.php?id=$1"
