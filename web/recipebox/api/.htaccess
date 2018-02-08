@@ -1,6 +1,4 @@
 RewriteEngine On
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteRule "^meals/([a-z]+)$" "https://%{HTTP_HOST}/recipebox/api/meals/meals_recipes.php?meal=$1"
 RewriteRule "^meals$" "https://%{HTTP_HOST}/recipebox/api/meals/meals.php"
 RewriteRule "^recipes/([0-9]+)$" "https://%{HTTP_HOST}/recipebox/api/recipes/recipes_by_id.php?id=$1"
