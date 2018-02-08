@@ -128,9 +128,20 @@ function recipeRender(recipe) {
           <strong>Serves: </strong>${recipe.servings}
         </div>
       </div>
-      <div class="row">
+      <div class="row border-top mt-3 pt-2">
         <div class="col-sm">
-          <p>ingredients</p>
+          <h3>ingredients</h3>
+          <ul>
+            ${recipe.ingredients
+              .map(ingredient => "<li>" + ingredient.name + "</li>")
+              .join("")}
+          </ul>
+        </div>
+      </div>
+      <div class="row border-top mt-3 pt-2">
+        <div class="col-sm">
+          <h3>Instructions</h3>
+          <p>${recipe.instructions}</p>
         </div>
       </div>
     </div>
