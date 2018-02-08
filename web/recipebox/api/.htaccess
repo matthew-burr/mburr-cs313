@@ -5,3 +5,5 @@ RewriteRule "^recipes/([0-9]+)$" "http://%{HTTP_HOST}/recipebox/api/recipes/reci
 
 RewriteCond "%{HTTP_HOST}" "herokuapp.com"
 RewriteRule "^http:(.+)" "https:$1"
+
+RewriteRule "(https?://)localhost/recipebox/(.+)" "$1localhost/mburr-cs313/web/recipebox/$2"
