@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule "^meals/([a-z]+)$" "meals/meals_recipes.php?meal=$1"
+RewriteRule "^meals/$" "meals/meals.php"
+RewriteRule "^recipes/([0-9]+)$" "recipes/recipes_by_id.php?id=$1"

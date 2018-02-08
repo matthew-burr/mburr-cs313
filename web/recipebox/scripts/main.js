@@ -2,9 +2,9 @@
 // Once the document is loaded, we retrieve our
 // list of available meals from the service
 $(document).ready(() => {
-  $.post(
-    "service/recipebox.php",
-    { action: "getMealList" },
+  $.get(
+    "api/meals",
+    null,
     response => {
       console.log(response);
       $("#mealTabBar").html(mealListRender(response.content));
@@ -54,9 +54,10 @@ function mealRender(meal, isActive) {
 // mealPageRender renders the recipes for a particular meal
 function mealPageRender(meal) {
   recipePanelClear();
-  $.post(
-    "service/recipebox.php",
-    { action: "getRecipeList", meal: meal },
+  console.log(meal);
+  $.get(
+    `api/meals/${meal}`,
+    null,
     response => {
       $("#recipeList").html(recipeListRender(response.content));
       $("#recipeList .list-group-item").on("click", e => {
@@ -109,9 +110,9 @@ function recipePanelClear() {
 }
 
 function recipePanelRender(recipeID) {
-  $.post(
-    "service/recipebox.php",
-    { action: "getRecipeByID", id: recipeID },
+  $.get(
+    `api/recipes/${recipeID}`,
+    null,
     response => {
       $("#recipePanel").html(recipeRender(response.content));
     },
