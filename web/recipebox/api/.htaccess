@@ -2,5 +2,3 @@ RewriteEngine On
 RewriteRule "^meals/([a-z]+)$" "https://%{HTTP_HOST}%{REQUEST_URI}/meals_recipes.php?meal=$1"
 RewriteRule "^meals$" "https://%{HTTP_HOST}%{REQUEST_URI}/meals.php"
 RewriteRule "^recipes/([0-9]+)$" "https://%{HTTP_HOST}%{REQUEST_URI}/recipes_by_id.php?id=$1"
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
