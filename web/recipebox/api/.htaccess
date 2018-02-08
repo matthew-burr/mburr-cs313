@@ -4,4 +4,4 @@ RewriteRule "^meals$" "http://%{HTTP_HOST}/recipebox/api/meals/meals.php"
 RewriteRule "^recipes/([0-9]+)$" "http://%{HTTP_HOST}/recipebox/api/recipes/recipes_by_id.php?id=$1"
 
 RewriteCond "%{HTTP_HOST}" "herokuapp.com"
-RewriteRule "^http" "https"
+RewriteRule "^http:(.+)" "https:$1"
