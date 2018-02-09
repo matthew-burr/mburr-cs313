@@ -1,126 +1,51 @@
-// Here's where the code actually begins
-// Once the document is loaded, we retrieve our
-// list of available meals from the service
-$(document).ready(() => {
-  $.get(
-    "api/meals",
-    null,
-    response => {
-      console.log(response);
-      $("#mealTabBar").html(mealListRender(response.content));
-      $("#mealTabBar a[data-toggle='tab']").on("shown.bs.tab", e => {
-        let meal = e.target.id;
-        meal = meal.split("-")[1];
-        mealPageRender(meal);
-      });
-    },
-    "json"
-  );
-  return;
-});
+const MealList = (mealList, currentMeal) => {
+  let ul = $(`<ul class="nav nav-tabs" id="mealListNav"></ul>`);
+  mealList.forEach(meal => ul.append(Meal(meal, currentMeal)));
+  return ul;
+};
 
-// mealListRender draws our tab bar of meals
-function mealListRender(mealList) {
-  let isCurrent = true;
-  return `
-    <ul class="nav nav-tabs" id="mealListNav">
-      ${mealList
-        .map(meal => {
-          let mealTag = mealRender(meal, isCurrent);
-          isCurrent = false;
-          return mealTag;
-        })
-        .join("")}
-    </ul>
-  `;
-}
-
-// mealRender renders an individual meal
-function mealRender(meal, isActive) {
-  if (isActive) {
-    mealPageRender(meal.name);
-  }
-  return `
-    <li class="nav-item">
+const Meal = (meal, currentMeal) => {
+  return $(`<li class="nav-item"></li>`).append(
+    $(`
       <a 
-        class="nav-link ${isActive ? "active" : ""}" 
+        class="nav-link ${meal.name == currentMeal.name ? "active" : ""}" 
         data-toggle="tab"
         id="meal-${meal.name}"
         href="#">${meal.name}</a>
-    </li>
-  `;
-}
-
-// mealPageRender renders the recipes for a particular meal
-function mealPageRender(meal) {
-  recipePanelClear();
-  console.log(meal);
-  $.get(
-    `api/meals/${meal}`,
-    null,
-    response => {
-      $("#recipeList").html(recipeListRender(response.content));
-      $("#recipeList .list-group-item").on("click", e => {
-        let recipeID = e.target.id;
-        recipeID = recipeID.split("-")[1];
-        recipePanelRender(recipeID);
-      });
-    },
-    "json"
+    `).on("shown.bs.tab", e => {
+      mealPageRender(meal.name);
+    })
   );
-}
+};
 
-// recipeListRender draws the list of recipes
-function recipeListRender(recipeList) {
+const RecipeList = (recipeList, currentRecipe) => {
   if (recipeList == undefined) {
     return ``;
   }
-  isActive = true;
   return `
     <div class="list-group">
       ${recipeList
-        .map(recipe => {
-          let content = recipeListItemRender(recipe, isActive);
-          isActive = false;
-          return content;
-        })
+        .map(recipe => RecipeListItem(recipe, currentRecipe))
         .join("")}
     </div>
   `;
-}
+};
 
-// recipeListItemRender draws an individual recipe in a list
-function recipeListItemRender(recipe, isActive) {
-  if (isActive) {
-    recipePanelRender(recipe.id);
-  }
+const RecipeListItem = (recipe, currentRecipe) => {
   return `
     <a
     id="recipe-${recipe.id}"
     href="#"
     data-toggle="list"
-    class="list-group-item list-group-item-action ${isActive ? "active" : ""}">
+    class="list-group-item list-group-item-action ${
+      recipe.id == currentRecipe.id ? "active" : ""
+    }">
       ${recipe.name}
     </a>
   `;
-}
+};
 
-function recipePanelClear() {
-  $("#recipePanel").html("");
-}
-
-function recipePanelRender(recipeID) {
-  $.get(
-    `api/recipes/${recipeID}`,
-    null,
-    response => {
-      $("#recipePanel").html(recipeRender(response.content));
-    },
-    "json"
-  );
-}
-
-function recipeRender(recipe) {
+const Recipe = recipe => {
   return `
     <div class="container">
       <div class="row">
@@ -147,4 +72,76 @@ function recipeRender(recipe) {
       </div>
     </div>
   `;
+};
+
+class RecipeBox {
+  constructor(mealList) {
+    this.mealList = mealList;
+    this.currentMeal = mealList[0];
+  }
+
+  render() {
+    this.mealList.forEach(meal => {});
+    $("#mealTabBar").append(MealList(this.mealList, this.currentMeal));
+    mealPageRender(this.currentMeal.name);
+  }
+}
+
+var recipeBox;
+
+// Here's where the code actually begins
+// Once the document is loaded, we retrieve our
+// list of available meals from the service
+$(document).ready(() => {
+  $.get(
+    "api/meals",
+    null,
+    response => {
+      console.log(response);
+      recipeBox = new RecipeBox(response.content);
+      recipeBox.render();
+    },
+    "json"
+  );
+  return;
+});
+
+// mealPageRender renders the recipes for a particular meal
+function mealPageRender(meal) {
+  recipePanelClear();
+  console.log(meal);
+  $.get(
+    `api/meals/${meal}`,
+    null,
+    response => {
+      if (response.content == undefined) {
+        recipePanelClear();
+        $("#recipeList").html();
+        return;
+      }
+      $("#recipeList").html(RecipeList(response.content, response.content[0]));
+      $("#recipeList .list-group-item").on("click", e => {
+        let recipeID = e.target.id;
+        recipeID = recipeID.split("-")[1];
+        recipePanelRender(recipeID);
+      });
+      recipePanelRender(response.content[0].id);
+    },
+    "json"
+  );
+}
+
+function recipePanelClear() {
+  $("#recipePanel").html("");
+}
+
+function recipePanelRender(recipeID) {
+  $.get(
+    `api/recipes/${recipeID}`,
+    null,
+    response => {
+      $("#recipePanel").html(Recipe(response.content));
+    },
+    "json"
+  );
 }
