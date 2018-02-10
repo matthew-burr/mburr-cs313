@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // This file contains common functionality shared by all services
 session_start();
 
@@ -19,6 +20,7 @@ function getStatusCode($status) {
 function getUserID() {
   if (!isset($_SESSION['USER_ID'])) {
     sendResponse('UNAUTHORIZED', 'User has not logged in');
+    exit();
   }
   return $_SESSION['USER_ID'];
 }
