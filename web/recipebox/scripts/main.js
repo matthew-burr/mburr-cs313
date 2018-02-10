@@ -2,6 +2,9 @@
 // Once the document is loaded, we retrieve our
 // list of available meals from the service
 $(document).ready(() => {
+  $("#changeUser").on("click", () => {
+    location = "login.html";
+  });
   fetch("api/meals", {
     method: "GET",
     credentials: "same-origin",
@@ -37,7 +40,7 @@ $(document).ready(() => {
 function mealListRender(mealList) {
   let isCurrent = true;
   return `
-    <ul class="nav nav-tabs" id="mealListNav">
+    <ul class="nav nav-pills" id="mealListNav">
       ${mealList
         .map(meal => {
           let mealTag = mealRender(meal, isCurrent);
@@ -106,6 +109,7 @@ function mealPageRender(meal) {
 // recipeListRender draws the list of recipes
 function recipeListRender(recipeList) {
   if (recipeList == undefined) {
+    recipePanelNoRecipes();
     return ``;
   }
   isActive = true;
@@ -138,6 +142,11 @@ function recipeListItemRender(recipe, isActive) {
   `;
 }
 
+function recipePanelNoRecipes() {
+  $("#recipePanel").html(
+    "<h2>You don't have any recipes for this type of meal</h2>"
+  );
+}
 function recipePanelClear() {
   $("#recipePanel").html("");
 }
