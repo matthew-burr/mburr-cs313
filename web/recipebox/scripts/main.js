@@ -2,20 +2,34 @@
 // Once the document is loaded, we retrieve our
 // list of available meals from the service
 $(document).ready(() => {
-  $.get(
-    "api/meals",
-    null,
-    response => {
-      console.log(response);
-      $("#mealTabBar").html(mealListRender(response.content));
+  fetch("api/meals", {
+    method: "GET",
+    credentials: "same-origin",
+    redirect: "follow"
+  })
+    .then(response => {
+      if (response.status == 401) {
+        // we do not appear to be logged in, so redirect to login
+        location = "login.html";
+        return;
+      }
+
+      // we got our meal list back, render it and set up
+      // event handlers
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(resJson => {
+      console.log(resJson);
+      let meals = resJson.content;
+      $("#mealTabBar").html(mealListRender(meals));
       $("#mealTabBar a[data-toggle='tab']").on("shown.bs.tab", e => {
         let meal = e.target.id;
         meal = meal.split("-")[1];
         mealPageRender(meal);
       });
-    },
-    "json"
-  );
+    });
   return;
 });
 
@@ -55,19 +69,38 @@ function mealRender(meal, isActive) {
 function mealPageRender(meal) {
   recipePanelClear();
   console.log(meal);
-  $.get(
-    `api/meals/${meal}`,
-    null,
-    response => {
-      $("#recipeList").html(recipeListRender(response.content));
+  // get the recipes for this meal from the server
+  fetch(`api/meals/${meal}`, {
+    method: "GET",
+    credentials: "same-origin",
+    redirect: "follow",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    })
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      if (response.status == 401) {
+        location = "login.html";
+      }
+
+      throw new Error("Unexpected error");
+    })
+    .then(resJson => {
+      $("#recipeList").html(recipeListRender(resJson.content));
       $("#recipeList .list-group-item").on("click", e => {
         let recipeID = e.target.id;
         recipeID = recipeID.split("-")[1];
         recipePanelRender(recipeID);
       });
-    },
-    "json"
-  );
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 // recipeListRender draws the list of recipes
@@ -110,14 +143,32 @@ function recipePanelClear() {
 }
 
 function recipePanelRender(recipeID) {
-  $.get(
-    `api/recipes/${recipeID}`,
-    null,
-    response => {
-      $("#recipePanel").html(recipeRender(response.content));
-    },
-    "json"
-  );
+  fetch(`api/recipes/${recipeID}`, {
+    method: "GET",
+    credentials: "same-origin",
+    redirect: "follow",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    })
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      if (response.status == 401) {
+        location = "login.html";
+      }
+
+      throw new Error("Unexpected response");
+    })
+    .then(resJson => {
+      $("#recipePanel").html(recipeRender(resJson.content));
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 function recipeRender(recipe) {

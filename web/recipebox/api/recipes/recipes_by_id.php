@@ -1,10 +1,11 @@
 <?php
 require_once "../service.php";
+require_once "../database.php";
 
 $id = $_GET['id'];
-$userId = 2; // TODO: Bind this to a session value
-$db = getConnection();
-$stmt = $db->prepare(
+$userId = getUserID();
+
+$rows = getRows(
   'SELECT name, servings, instructions
   FROM recipe_box.recipe
   WHERE ("id" = :id
@@ -12,30 +13,26 @@ $stmt = $db->prepare(
   OR EXISTS (SELECT * FROM recipe_box.user_recipe 
   WHERE recipe_id = :id 
   AND recipe_id = "id"
-  AND user_id = :user_id)'
+  AND user_id = :user_id)',
+  array(':user_id' => $userId, ':id' => $id)
 );
-$stmt->bindValue(':user_id', $userId, PDO::PARAM_STR);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-$stmt->execute();
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$rowCount = count($rows);
+
 $recipe = $rows[0];
 
-$stmt = $db->prepare(
+$ingredients = getRows(
   'SELECT i.name
      FROM recipe_box.ingredient AS i
      JOIN recipe_box.recipe_ingredient AS ri
        ON i."id" = ri.ingredient_id
-    WHERE ri.recipe_id = :id'
+    WHERE ri.recipe_id = :id',
+  array(':id' => $id)
 );
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-$stmt->execute();
-$ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $recipeWithIng = array(
   "name" => $recipe['name'], 
   "servings" => $recipe['servings'],
   "instructions" => $recipe['instructions'],
   "ingredients" => $ingredients);
-sendResponse("success", "$rowCount rows retrieved", $recipeWithIng);
+
+sendResponse("success", "1 rows retrieved", $recipeWithIng);
 ?>

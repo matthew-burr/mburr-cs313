@@ -1,11 +1,13 @@
 <?php
 require_once "../service.php";
+require_once "../database.php";
 
-$db = getConnection();
-$stmt = $db->prepare('SELECT unnest(enum_range(NULL::meal_type)) AS "name"');
-$stmt->execute();
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$rowCount = count($rows);
+// we don't expect the list of meals to change any time soon
+// so we will cache the list in a session
+if (!isset($_SESSION['MEALS'])) {
+  $_SESSION['MEALS'] = getRows('SELECT unnest(enum_range(NULL::meal_type)) AS "name"');
+}
 
-sendResponse("success", "$rowCount rows retrieved", $rows);
+$rowCount = count($_SESSION['MEALS']);
+sendResponse("success", "$rowCount rows retrieved", $_SESSION['MEALS']);
 ?>

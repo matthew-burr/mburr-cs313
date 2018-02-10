@@ -2,40 +2,43 @@
 // This file contains common functionality shared by all services
 session_start();
 
-// We only accept POST as a method
-//$_SERVER["REQUEST_METHOD"] == "POST" or die;
+$STATUS_CODE = array(
+  'OK' => 200,
+  'SUCCESS' => 200,
+  'BAD_REQUEST' => 400,
+  'FAILURE' => 400,
+  'UNAUTHORIZED' => 401
+);
 
-// We need to have an action parameter, or we can do nothing
-//isset($_POST["action"]) or die;
+function getStatusCode($status) {
+  global $STATUS_CODE;
+  return $STATUS_CODE[strtoupper($status)];
+}
+// getUserID gets the current user's ID; logs the user in
+// if they don't have an ID in the session yet
+function getUserID() {
+  if (!isset($_SESSION['USER_ID'])) {
+    sendResponse('UNAUTHORIZED', 'User has not logged in');
+  }
+  return $_SESSION['USER_ID'];
+}
+
 
 // sendResponse is the method for returning anything back from the service
-function sendResponse($status = "success", $message = "", $content = NULL) {
-  $response = array("status" => $status, "message" => $message);
+function sendResponse($status = "SUCCESS", $message = "", $content = NULL) {
+  // set the response status code
+  $statusCode = getStatusCode($status);
+  http_response_code($statusCode);
+
+  // build the response content
+  $response = array("message" => $message);
   if ($content != NULL) {
     $response["content"] = $content;
   }
-  $responseJSON = json_encode($response);
-  echo $responseJSON;
+  header('Content-Type: application/json');
+
+  // send the response
+  echo json_encode($response);
 }
 
-// getConnection returns a database connection to send and retrieve queries
-function getConnection() {
-  $dbUrl = getenv('DATABASE_URL');
-
-  $dbOpts = parse_url($dbUrl);
-
-  $dbHost = $dbOpts['host'];
-  $dbPort = $dbOpts['port'];
-  $dbUser = $dbOpts['user'];
-  $dbPass = $dbOpts['pass'];
-  $dbName = ltrim($dbOpts['path'], '/');
-  try {
-    $db = new PDO("pgsql:host=$dbHost;dbname=$dbName;port=$dbPort", $dbUser, $dbPass);
-  }
-  catch (PDOException $ex) {
-    sendResponse("failure", $ex->getMessage());
-    die();
-  }
-  return $db;
-}
 ?>
