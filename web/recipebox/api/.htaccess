@@ -7,4 +7,4 @@ RewriteRule "^login$" "login/do_login.php"
 RewriteCond "%{HTTP_HOST}" "herokuapp.com"
 RewriteRule "^http:(.+)" "https:$1"
 
-RewriteRule "(https?://)localhost/recipebox/(.+)" "$1localhost/mburr-cs313/web/recipebox/$2"
+RewriteRule "(https?://)localhost/recipebox/(.+)" "$1localhost/mburr-cs313/web/recipebox/$2" [R=301]

@@ -28,15 +28,20 @@
               <input type="text" class="form-control" id="nameInput" placeholder="Name of the recipe" />
               <small id="nameHelp" class="form-text text-muted">Provide a name for the recipe</small>
               <label for="servingsInput">Servings</label>
-              <input type="number" min="1" class="form-control" id="servingsInput" />
+              <input type="number" min="1" class="form-control" id="servingsInput" placeholder="Enter number"  />
               <small id="servingsHelp" class="form-text text-muted">How many people does it serve</small>
             </div> <!-- nameGroup -->
             <div class="form-group" id="ingredientGroup">
+              <label>Ingredients</label>
+              <div id="ingredients">
               <!-- Ingredients will be added here -->
+              </div>
+              <small id="ingredientsHelp" class="form-text text-muted">Click Add Ingredient to add more</small>
+              <button class="btn btn-secondary mt-3" id="addIngredientButton" type="button">Add Ingredient</button>
             </div> <!-- ingredientGroup -->
             <div class="form-group" id="instructionGroup">
               <label for="instructionInput">Instructions</label><br />
-              <textarea id="instructionInput" cols="60" rows="10" placeholder="Enter instructions for the recipe"></textarea>
+              <textarea class="form-control" id="instructionInput" cols="60" rows="10" placeholder="Enter instructions for the recipe"></textarea>
             </div> <!-- instructionGroup -->
             <button type="button" id="saveButton" class="btn btn-primary">Save</button>
           </form>
@@ -46,7 +51,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="scripts/login.js"></script>
+    <script src="scripts/add.js"></script>
   </body>
 </html>
 

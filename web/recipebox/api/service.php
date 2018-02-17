@@ -8,7 +8,8 @@ $STATUS_CODE = array(
   'SUCCESS' => 200,
   'BAD_REQUEST' => 400,
   'FAILURE' => 400,
-  'UNAUTHORIZED' => 401
+  'UNAUTHORIZED' => 401,
+  'NOT_ALLOWED' => 405
 );
 
 function getStatusCode($status) {
