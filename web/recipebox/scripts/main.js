@@ -2,10 +2,13 @@
 // Once the document is loaded, we retrieve our
 // list of available meals from the service
 $(document).ready(() => {
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
   $("#changeUser").on("click", () => {
     location = "login.html";
   });
-  fetch("api/meals", {
+  fetch("api/meals/list.php", {
     method: "GET",
     credentials: "same-origin",
     redirect: "follow"
@@ -73,7 +76,7 @@ function mealPageRender(meal) {
   recipePanelClear();
   console.log(meal);
   // get the recipes for this meal from the server
-  fetch(`api/meals/${meal}`, {
+  fetch(`api/meals/get_recipes.php?meal=${meal}`, {
     method: "GET",
     credentials: "same-origin",
     redirect: "follow",
@@ -152,7 +155,7 @@ function recipePanelClear() {
 }
 
 function recipePanelRender(recipeID) {
-  fetch(`api/recipes/${recipeID}`, {
+  fetch(`api/recipes/get_one.php?id=${recipeID}`, {
     method: "GET",
     credentials: "same-origin",
     redirect: "follow",

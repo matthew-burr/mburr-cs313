@@ -12,6 +12,13 @@ $STATUS_CODE = array(
   'NOT_ALLOWED' => 405
 );
 
+function stopIfNot($supportedMethod) {
+  if ($_SERVER['REQUEST_METHOD'] != $supportedMethod) {
+    sendResponse('NOT_ALLOWED', "Does not support $method");
+    exit();
+  }
+}
+
 function getStatusCode($status) {
   global $STATUS_CODE;
   return $STATUS_CODE[strtoupper($status)];
