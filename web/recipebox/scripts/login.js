@@ -42,7 +42,7 @@ function tryLogin() {
 
 // redirects to the main page after a successful login attempt
 function redirectToMainPage() {
-  window.location = "index.html";
+  window.location = "index.php";
 }
 
 // displays an error message on log in failure

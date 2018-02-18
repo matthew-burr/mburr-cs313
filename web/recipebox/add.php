@@ -26,7 +26,18 @@
             <div class="form-group" id="mealgroup">
               <label for="mealSelect">Meal</label>
               <select id="mealSelect" class="form-control" name="meal">
-                <!-- Meals will be added here -->
+<?php 
+require_once "api/service.php";
+require_once "api/database.php";
+require_once "api/meals/common.php";
+
+$meals = getMeals();
+
+foreach($meals as $meal) {
+  $name = $meal['name'];
+  echo "<option value='$name'>$name</option>";
+}
+?>
               </select>
             </div>
             <div class="form-group" id="namegroup">

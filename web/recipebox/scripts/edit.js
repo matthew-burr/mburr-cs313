@@ -1,16 +1,19 @@
-// When the document loads, we need to add entry
-// for an ingredient
-$(document).ready(function() {
-  let ingredientNumber = 0;
-  addIngredient(ingredientNumber);
+$(document).ready(() => {
+  let ingredientNumber = 99;
   $("#addIngredientButton").click(function() {
     ingredientNumber++;
     addIngredient(ingredientNumber);
   });
-  $("#mealSelect").focus();
+
+  $(".delete-button").click(event => {
+    $(event.target)
+      .closest("div.row")
+      .remove();
+  });
 
   $("#saveButton").click(function(e) {
     let recipe = {
+      id: $("#recipeID").val(),
       name: $("#nameInput").val(),
       servings: $("#servingsInput").val(),
       instructions: $("#instructionInput").val(),
@@ -22,16 +25,8 @@ $(document).ready(function() {
     $(".ingredient").each(function(index, elem) {
       recipe.ingredients.push($(elem).val());
     });
-    fetch("api/recipes/add.php", {
-      method: "POST",
-      credentials: "same-origin",
-      redirect: "follow",
-      body: JSON.stringify(recipe),
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      })
-    })
+
+    fetch("api/recipes/update.php", headers("PUT", JSON.stringify(recipe)))
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -49,7 +44,6 @@ $(document).ready(function() {
   });
 });
 
-// addIngredient adds a new ingredient text box to the form
 function addIngredient(ingredientNumber) {
   // The row
   let ingRow = $("<div class='row'></div>");
@@ -84,17 +78,4 @@ function addIngredient(ingredientNumber) {
   $("#ingredients").append(ingRow);
 
   newIngredient.focus();
-}
-
-function headers(method, body) {
-  return {
-    method: method,
-    credentials: "same-origin",
-    redirect: "follow",
-    body: body,
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    })
-  };
 }

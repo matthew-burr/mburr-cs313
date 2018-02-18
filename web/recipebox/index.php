@@ -28,7 +28,8 @@
         <div class="col-sm-10">
           <div id="recipeMenu" class="container-fluid">
             <div class="row justify-content-end">
-              <a href="add.html" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Add a new recipe"><span class="fa fa-plus"></span></a>
+              <button id="editRecipe" class="btn btn-outline-primary mr-1" data-toggle="tooltip" data-placement="bottom" title="Edit this recipe"><span class="fa fa-pencil"></span></button>
+              <a href="add.php" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Add a new recipe"><span class="fa fa-plus"></span></a>
             </div>
           </div>
           <div id="recipePanel">

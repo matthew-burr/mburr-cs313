@@ -1,12 +1,19 @@
 // Here's where the code actually begins
 // Once the document is loaded, we retrieve our
 // list of available meals from the service
+let recipeID = 0;
+
 $(document).ready(() => {
   $(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
+
   $("#changeUser").on("click", () => {
-    location = "login.html";
+    location = "login.php";
+  });
+
+  $("#editRecipe").click(() => {
+    location = `edit.php?id=${recipeID}`;
   });
   fetch("api/meals/list.php", {
     method: "GET",
@@ -16,7 +23,7 @@ $(document).ready(() => {
     .then(response => {
       if (response.status == 401) {
         // we do not appear to be logged in, so redirect to login
-        location = "login.html";
+        location = "login.php";
         return;
       }
 
@@ -91,7 +98,7 @@ function mealPageRender(meal) {
       }
 
       if (response.status == 401) {
-        location = "login.html";
+        location = "login.php";
       }
 
       throw new Error("Unexpected error");
@@ -170,7 +177,7 @@ function recipePanelRender(recipeID) {
       }
 
       if (response.status == 401) {
-        location = "login.html";
+        location = "login.php";
       }
 
       throw new Error("Unexpected response");
@@ -184,6 +191,7 @@ function recipePanelRender(recipeID) {
 }
 
 function recipeRender(recipe) {
+  recipeID = recipe.id;
   return `
     <div class="container">
       <div class="row">
