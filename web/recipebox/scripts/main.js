@@ -4,10 +4,12 @@
 let recipeID = 0;
 
 $(document).ready(() => {
+  // Enable bootstrap tooltips
   $(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
 
+  // Wire up event handlers
   $("#changeUser").on("click", () => {
     location = "login.php";
   });
@@ -15,34 +17,16 @@ $(document).ready(() => {
   $("#editRecipe").click(() => {
     location = `edit.php?id=${recipeID}`;
   });
-  fetch("api/meals/list.php", {
-    method: "GET",
-    credentials: "same-origin",
-    redirect: "follow"
-  })
-    .then(response => {
-      if (response.status == 401) {
-        // we do not appear to be logged in, so redirect to login
-        location = "login.php";
-        return;
-      }
 
-      // we got our meal list back, render it and set up
-      // event handlers
-      if (response.ok) {
-        return response.json();
-      }
-    })
-    .then(resJson => {
-      console.log(resJson);
-      let meals = resJson.content;
-      $("#mealTabBar").html(mealListRender(meals));
-      $("#mealTabBar a[data-toggle='tab']").on("shown.bs.tab", e => {
-        let meal = e.target.id;
-        meal = meal.split("-")[1];
-        mealPageRender(meal);
-      });
-    });
+  $("#mealTabBar a[data-toggle='tab']").on("shown.bs.tab", e => {
+    let meal = e.target.id;
+    meal = meal.split("-")[1];
+    mealPageRender(meal);
+  });
+
+  // Activate the first meal tab
+  $("#mealTabBar a[data-toggle='tab']:first").tab("show");
+
   return;
 });
 

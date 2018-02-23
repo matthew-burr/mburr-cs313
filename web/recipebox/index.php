@@ -1,45 +1,43 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Recipe Box</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylesheets/main.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div id="recipeBoxHeader" class="row">
-        <div class="col-sm">
-          <h1>Recipe Box</h1>
-        </div>
-      </div>
-      <div class="navbar row border-bottom bg-light">
-        <div id="mealTabBar">
-        </div>
-        <form>
-          <button type="button" class="btn btn-outline-secondary" id="changeUser">Change User</button>
-        </form>
-      </div>
-    </div>
-    <div id="mealPage" class="container-fluid mt-5">
-      <div class="row">
-        <div id="recipeList" class="col-sm-2">
-        </div>
-        <div class="col-sm-10">
-          <div id="recipeMenu" class="container-fluid">
+<?php require_once "header.php"; ?>
+    <div class="row navbar border-bottom bg-light" id="menu">
+      <div id="mealTabBar">
+<?php
+// Here, we render the mealTabBar tabs
+require_once "api/meals/common.php";
+
+echo "<ul class='nav nav-pills' id='mealListNav'>";
+$meals = getMeals();
+echo implode("", 
+  array_map(function($meal) {
+    $name = $meal['name'];
+    return "
+      <li class='nav-item'>
+        <a 
+          class='nav-link'
+          data-toggle='tab' 
+          id='meal-$name' href='#'>$name</a>
+      </li>";
+  }, $meals)
+);
+echo "</ul>";
+?>
+      </div> <!-- mealTabBar -->
+      <form id="userManagement">
+        <button type="button" class="btn btn-outline-secondary" id="changeUser">Change User</button>
+      </form> <!-- userManagement -->
+    </div> <!-- menu -->
+    <div id="mealPage" class="row mt-5">
+      <div id="recipeList" class="col-sm-2">
+      </div> <!-- recipeList -->
+      <div id="recipeWindow" class="col-sm-10">
+        <div id="recipeMenu" class="container-fluid">
             <div class="row justify-content-end">
               <button id="editRecipe" class="btn btn-outline-primary mr-1" data-toggle="tooltip" data-placement="bottom" title="Edit this recipe"><span class="fa fa-pencil"></span></button>
               <a href="add.php" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Add a new recipe"><span class="fa fa-plus"></span></a>
-            </div>
-          </div>
-          <div id="recipePanel">
-          </div>
-        </div>
-      </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="scripts/main.js"></script>
-  </body>
-</html>
+            </div> <!-- row -->
+        </div> <!-- recipeMenu -->
+        <div id="recipePanel">
+        </div> <!-- recipePanel -->
+      </div> <!-- recipeWindow -->
+    </div> <!-- mealPage -->
+<?php require_once "footer.php" ?>
