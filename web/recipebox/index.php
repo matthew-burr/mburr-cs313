@@ -1,4 +1,6 @@
+<?php require_once "login_check.php"; ?>
 <?php require_once "header.php"; ?>
+
     <div class="row navbar border-bottom bg-light" id="menu">
       <div id="mealTabBar">
 <?php
@@ -23,7 +25,7 @@ echo "</ul>";
 ?>
       </div> <!-- mealTabBar -->
       <form id="userManagement">
-        <button type="button" class="btn btn-outline-secondary" id="changeUser">Change User</button>
+        <button type="button" class="btn btn-outline-secondary" id="changeUser">Logout</button>
       </form> <!-- userManagement -->
     </div> <!-- menu -->
     <div id="mealPage" class="row mt-5">
@@ -40,4 +42,5 @@ echo "</ul>";
         </div> <!-- recipePanel -->
       </div> <!-- recipeWindow -->
     </div> <!-- mealPage -->
+    <script src="scripts/main.js"></script>
 <?php require_once "footer.php" ?>

@@ -1,14 +1,16 @@
+<?php require_once "login_check.php"; ?>
 <?php require_once "header.php"; ?>
     <div class="container mt-5" id="loginPanel">
       <div class="row justify-content-center">
         <div class="col-sm-6">
+          <span class="formError larger" id="mainError"></span>
           <h2>Describe your recipe</h2>
         </div> <!-- col -->
       </div> <!-- row -->
       <div class="row justify-content-center">
         <div class="col-sm-6 border rounded p-4">
           <!-- Form modeled from examples at http://getbootstrap.com/docs/4.0/components/forms/ -->
-          <form id="loginForm">
+          <form id="addForm">
             <div class="form-group" id="mealgroup">
               <label for="mealSelect">Meal</label>
               <select id="mealSelect" class="form-control" name="meal">
@@ -26,12 +28,16 @@ foreach($meals as $meal) {
 ?>
               </select>
             </div>
-            <div class="form-group" id="namegroup">
+            <div class="form-group" id="nameGroup">
               <label for="nameInput">Recipe Name</label>
-              <input type="text" class="form-control" id="nameInput" placeholder="Name of the recipe" />
+              <input type="text" class="form-control errorable" data-error="nameError" id="nameInput" placeholder="Name of the recipe" required />
+              <span class="formError" data-message="Name is required" id="nameError" />
               <small id="nameHelp" class="form-text text-muted">Provide a name for the recipe</small>
+            </div> <!-- nameGroup -->
+            <div class="form-group" id="servingsGroup">
               <label for="servingsInput">Servings</label>
-              <input type="number" min="1" class="form-control" id="servingsInput" placeholder="Enter number"  />
+              <input type="number" min="1" class="form-control errorable" data-error="servingsError" id="servingsInput" placeholder="Enter number" required />
+              <span class="formError" data-message="Servings are required" id="servingsError" />
               <small id="servingsHelp" class="form-text text-muted">How many people does it serve</small>
             </div> <!-- nameGroup -->
             <div class="form-group" id="ingredientGroup">
@@ -51,4 +57,5 @@ foreach($meals as $meal) {
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- loginPanel -->
+    <script src="scripts/add.js"></script>
 <?php require_once "footer.php"; ?>

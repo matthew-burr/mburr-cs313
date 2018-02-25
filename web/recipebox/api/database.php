@@ -1,6 +1,6 @@
 <?php 
-
-require_once "service.php";
+define('__ROOT__', dirname(dirname(__FILE__)));
+require_once(__ROOT__.'/api/service.php');
 
 // set up the connection string if it isn't already
 if (!isset($_SESSION['CONNECTION_STRING'])) {

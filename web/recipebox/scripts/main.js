@@ -11,7 +11,7 @@ $(document).ready(() => {
 
   // Wire up event handlers
   $("#changeUser").on("click", () => {
-    location = "login.php";
+    location = "logout.php";
   });
 
   $("#editRecipe").click(() => {
@@ -137,6 +137,7 @@ function recipeListItemRender(recipe, isActive) {
 }
 
 function recipePanelNoRecipes() {
+  $("#editRecipe").hide();
   $("#recipePanel").html(
     "<h2>You don't have any recipes for this type of meal</h2>"
   );
@@ -175,6 +176,7 @@ function recipePanelRender(recipeID) {
 }
 
 function recipeRender(recipe) {
+  $("#editRecipe").show();
   recipeID = recipe.id;
   return `
     <div class="container">
@@ -186,7 +188,7 @@ function recipeRender(recipe) {
       </div>
       <div class="row border-top mt-3 pt-2">
         <div class="col-sm">
-          <h3>ingredients</h3>
+          <h3>Ingredients</h3>
           <ul>
             ${recipe.ingredients
               .map(ingredient => "<li>" + ingredient.name + "</li>")

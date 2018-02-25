@@ -1,3 +1,4 @@
+<?php require_once "login_check.php"; ?>
 <?php
 
 require_once "api/service.php";
@@ -12,13 +13,14 @@ $recipe = getRecipeByID($recipeID);
     <div class="container mt-5" id="loginPanel">
       <div class="row justify-content-center">
         <div class="col-sm-6">
+          <span class="formError larger" id="mainError"></span>
           <h2>Describe your recipe</h2>
         </div> <!-- col -->
       </div> <!-- row -->
       <div class="row justify-content-center">
         <div class="col-sm-6 border rounded p-4">
           <!-- Form modeled from examples at http://getbootstrap.com/docs/4.0/components/forms/ -->
-          <form id="loginForm">
+          <form id="editForm">
 <?php
 echo "<input type='hidden' value='$recipeID' name='recipeID' id='recipeID' />";
 ?>
@@ -41,14 +43,18 @@ foreach($meals as $meal) {
 ?>
               </select>
             </div>
-            <div class="form-group" id="namegroup">
+            <div class="form-group" id="nameGroup">
               <label for="nameInput">Recipe Name</label>
-              <input type="text" class="form-control" id="nameInput" value=<?php echo $recipe['name'] ?> />
+              <input type="text" class="form-control errorable" data-error="nameError" id="nameInput" name="name" value=<?php echo $recipe['name'] ?> required />
+              <span class="formError" data-message="Name is required" id="nameError" />
               <small id="nameHelp" class="form-text text-muted">Provide a name for the recipe</small>
+           </div> <!-- nameGroup -->
+            <div class="form-group" id="servingsGroup">
               <label for="servingsInput">Servings</label>
-              <input type="number" min="1" class="form-control" id="servingsInput" value=<?php echo $recipe['servings'] ?> />
+              <input type="number" min="1" class="form-control errorable" data-error="servingsError" id="servingsInput" value=<?php echo $recipe['servings'] ?> required />
+              <span class="formError" data-message="Servings are required" id="servingsError" />
               <small id="servingsHelp" class="form-text text-muted">How many people does it serve</small>
-            </div> <!-- nameGroup -->
+            </div> <!-- servingsGroup -->
             <div class="form-group" id="ingredientGroup">
               <label>Ingredients</label>
               <div id="ingredients">
@@ -57,9 +63,9 @@ $ingredientNumber = 0;
 foreach($recipe['ingredients'] as $ingredient) {
   $name = $ingredient['name'];
   echo "<div class='row'><div class='col-sm-10'>";
-  echo "<input id='ingredient-$ingredientNumber' name='ingredient[]' class='ingredient form-control mb-3' value='$name' />";
-  echo "</div><div class='col-sm-2'>";
-  echo "<button type='button' class='delete-button btn btn-outline-danger' data-toggle='tooltip' data-placement='below' title='Remove this ingredient'>X</button>";
+  echo "<input id='ingredient-$ingredientNumber' name='ingredient[]' class='ingredient form-control mb-3 errorable' data-error='ingredient-$ingredientNumber-error' value='$name' required />";
+  echo "<span class='formError' data-message='Ingredients must have a name' id='ingredient-$ingredientNumber-error' /></div><div class='col-sm-2'>";
+  echo "<button type='button' tabindex='-1' class='delete-button btn btn-outline-danger' data-toggle='tooltip' data-placement='below' title='Remove this ingredient'>X</button>";
   echo "</div></div>";
   $ingredientNumber = $ingredientNumber + 1;
 }
@@ -74,12 +80,12 @@ foreach($recipe['ingredients'] as $ingredient) {
 <?php
 echo $recipe['instructions'];
 ?>
-
 </textarea>
             </div> <!-- instructionGroup -->
-            <button type="button" id="saveButton" class="btn btn-primary">Save</button>
+            <button type="button" id="saveButton" class="btn btn-primary">Save Changes</button>
           </form>
         </div> <!-- col -->
       </div> <!-- row -->
     </div> <!-- loginPanel -->
+    <script src="scripts/edit.js"></script>
 <?php require_once "footer.php" ?>

@@ -1,3 +1,6 @@
+:root {
+  --standard-shadow: 2px 2px 5px rgb(10, 10, 10);
+}
 #recipeBoxHeader {
   /*height: 150px;*/
   background-image: url("../images/header.jpg");
@@ -7,5 +10,26 @@
 #recipeBoxHeader h1 {
   color: white;
   font-size: 48pt;
-  text-shadow: 2px 2px 5px rgb(10, 10, 10);
+  text-shadow: var(--standard-shadow);
+}
+
+.formError {
+  color: red;
+  font-weight: bold;
+}
+
+.larger {
+  font-size: larger;
+}
+
+.jumbo {
+  font-size: 96pt;
+}
+
+.white {
+  color: white;
+}
+
+.shadowed {
+  text-shadow: var(--standard-shadow);
 }

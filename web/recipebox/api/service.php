@@ -33,7 +33,6 @@ function getUserID() {
   return $_SESSION['USER_ID'];
 }
 
-
 // sendResponse is the method for returning anything back from the service
 function sendResponse($status = "SUCCESS", $message = "", $content = NULL) {
   // set the response status code
